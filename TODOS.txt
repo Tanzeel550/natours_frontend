@@ -1,0 +1,6 @@
+0) Test the login and sign up functionality on front end as it was much updated in backend.
+
+1) There should be no two bookings for one user
+2) hide a tour from the tours list if the tour is already booked
+3) Convert Class Based Components to Function Based Components
+4) Watch deployment and booking on cloud

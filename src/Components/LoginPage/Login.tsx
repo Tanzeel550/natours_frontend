@@ -4,9 +4,11 @@ import { connect, ConnectedProps } from 'react-redux';
 import { startLogin, startSendLoginEmail } from '../../actions/authActions';
 import { AppProps } from '../../store/configStore';
 
-const mapStateToProps = ({ auth }: AppProps) => ({ isAuthenticated: auth.isAuthenticated });
+const mapStateToProps = ({ auth }: AppProps) => ({
+  isAuthenticated: auth.isAuthenticated,
+});
 const connector = connect(mapStateToProps, { startLogin, startSendLoginEmail });
-type propsFromRedux = ConnectedProps<typeof connector>
+type propsFromRedux = ConnectedProps<typeof connector>;
 
 export const Login = (props: propsFromRedux & RouteComponentProps) => {
   const [email, setEmail] = useState('');
@@ -16,11 +18,9 @@ export const Login = (props: propsFromRedux & RouteComponentProps) => {
     const login = async (authToken: string) => {
       try {
         await props.startLogin(authToken);
-        await setTimeout(() => {
-        }, 2000);
+        await setTimeout(() => {}, 2000);
         props.history.push('/');
-      } catch (e) {
-      }
+      } catch (e) {}
     };
     const { authToken } = props.match.params as { authToken: string };
     if (authToken) login(authToken).then().catch();
@@ -28,17 +28,19 @@ export const Login = (props: propsFromRedux & RouteComponentProps) => {
 
   useEffect(() => {
     let search: URLSearchParams = new URLSearchParams(props.location.search);
-    if (props.isAuthenticated && search.get('from')) props.history.push(search.get('from')!!);
+    if (props.isAuthenticated && search.get('from'))
+      props.history.push(search.get('from')!!);
   }, [props]);
 
-  const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleLoginSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     try {
       await props.startSendLoginEmail(email, password);
       setEmail('');
       setPassword('');
-    } catch (e) {
-    }
+    } catch (e) {}
   };
 
   return (
@@ -78,9 +80,7 @@ export const Login = (props: propsFromRedux & RouteComponentProps) => {
             />
           </div>
           <div className="form__group">
-            <button className="btn btn--green">
-              Login
-            </button>
+            <button className="btn btn--green">Login</button>
           </div>
         </form>
       </div>

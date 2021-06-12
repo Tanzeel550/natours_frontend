@@ -5,26 +5,25 @@ import { startLogout } from '../actions/authActions';
 import { USER_IMAGES_BASE_URL } from '../config';
 import { AppProps } from '../store/configStore';
 
-const logoWhite = require("../utils/img/logo-white.png") as string
+const logoWhite = require('../utils/img/logo-white.png') as string;
 
 const mapStateToProps = ({ auth }: AppProps) => ({
-  user: auth.user, isAuthenticated: auth.isAuthenticated
+  user: auth.user,
+  isAuthenticated: auth.isAuthenticated,
 });
 const connector = connect(mapStateToProps, {
-  startLogout
+  startLogout,
 });
-type propsFromRedux = ConnectedProps<typeof connector>
+type propsFromRedux = ConnectedProps<typeof connector>;
 
 const Header = (props: propsFromRedux & RouteComponentProps) => {
-
   const handleLogout = async () => {
     const logoutButton = document.querySelector('.logout_button')!!;
     logoutButton.textContent = 'Logging Out';
 
     try {
       await props.startLogout();
-      await setTimeout(() => {
-      }, 2000);
+      await setTimeout(() => {}, 2000);
       props.history.push('/');
       logoutButton.textContent = 'Logged Out';
     } catch (e) {
@@ -41,14 +40,18 @@ const Header = (props: propsFromRedux & RouteComponentProps) => {
         <form className="nav__search">
           <button className="nav__search-btn">
             <svg>
-              <use xlinkHref="img/icons.svg#icon-search"/>
+              <use xlinkHref="img/icons.svg#icon-search" />
             </svg>
           </button>
-          <input type="text" placeholder="Search tours" className="nav__search-input"/>
+          <input
+            type="text"
+            placeholder="Search tours"
+            className="nav__search-input"
+          />
         </form>
       </nav>
       <div className="header__logo">
-        <img src={logoWhite} alt="Natours logo"/>
+        <img src={logoWhite} alt="Natours logo" />
       </div>
       <nav className="nav nav--user">
         {props.user ? (
@@ -87,4 +90,4 @@ const Header = (props: propsFromRedux & RouteComponentProps) => {
   );
 };
 
-export default connector(Header)
+export default connector(Header);

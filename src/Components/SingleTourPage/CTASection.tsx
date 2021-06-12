@@ -12,9 +12,11 @@ import { TourType } from '../../types/TourTypes';
 // import icons from '../../utils/img/icons.svg';
 const logoWhite = require('../../utils/img/logo-white.png') as string;
 
-const mapStateToProps = ({ auth }: AppProps) => ({ isAuthenticated: auth.isAuthenticated });
+const mapStateToProps = ({ auth }: AppProps) => ({
+  isAuthenticated: auth.isAuthenticated,
+});
 const connector = connect(mapStateToProps, { simulateErrorAlert });
-type propsFromRedux = ConnectedProps<typeof connector>
+type propsFromRedux = ConnectedProps<typeof connector>;
 
 const CTASection = (props: propsFromRedux & { tour: TourType }) => {
   const handleBookings = async () => {
@@ -25,7 +27,7 @@ const CTASection = (props: propsFromRedux & { tour: TourType }) => {
       const stripe = await loadStripe(process.env.STRIPE_PUBLIC_KEY!!);
       await stripe?.redirectToCheckout({
         // @ts-ignore
-        sessionId: (session).id
+        sessionId: session.id,
       });
     } catch (e) {
       document.querySelector('.btn__book-tour')!!.textContent = 'Book Tour';
@@ -38,7 +40,7 @@ const CTASection = (props: propsFromRedux & { tour: TourType }) => {
     <section className="section-cta">
       <div className="cta">
         <div className="cta__img cta__img--logo">
-          <img src={logoWhite} alt="Natours logo" className=""/>
+          <img src={logoWhite} alt="Natours logo" className="" />
         </div>
         {images?.map((image, index) => (
           <img
@@ -51,7 +53,8 @@ const CTASection = (props: propsFromRedux & { tour: TourType }) => {
         <div className="cta__content">
           <h2 className="heading-secondary">What are you waiting for?</h2>
           <p className="cta__text">
-            {duration} days. 1 adventure. Infinite memories. Make it yours today!
+            {duration} days. 1 adventure. Infinite memories. Make it yours
+            today!
           </p>
 
           {props.isAuthenticated ? (

@@ -6,7 +6,7 @@ import Loading from './Components/LoadingComponent/Loading';
 import { startBookTour } from './actions/bookingActions';
 
 const connector = connect(null, { startBookTour });
-type propsFromRedux = ConnectedProps<typeof connector>
+type propsFromRedux = ConnectedProps<typeof connector>;
 
 const CreateBooking = (props: propsFromRedux & RouteComponentProps) => {
   useEffect(() => {
@@ -22,7 +22,7 @@ const CreateBooking = (props: propsFromRedux & RouteComponentProps) => {
     };
     bookTour().then().catch();
   });
-  return <Loading/>;
+  return <Loading />;
 };
 
 export default withRouter(connector(CreateBooking));

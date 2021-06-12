@@ -3,26 +3,34 @@ import { connect, ConnectedProps } from 'react-redux';
 import { startUpdatePassword } from '../../actions/authActions';
 import { exitLoading, simulateLoading } from '../../actions/loadingActions';
 
-const connector = connect(null, { simulateLoading, exitLoading, startUpdatePassword });
-type propsFromRedux = ConnectedProps<typeof connector>
+const connector = connect(null, {
+  simulateLoading,
+  exitLoading,
+  startUpdatePassword,
+});
+type propsFromRedux = ConnectedProps<typeof connector>;
 
 const UpdatePassword = (props: propsFromRedux) => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (password !== confirmPassword) throw new Error('Your passwords don\'t match');
+      if (password !== confirmPassword)
+        throw new Error("Your passwords don't match");
 
-      await props.startUpdatePassword(currentPassword, password, confirmPassword);
+      await props.startUpdatePassword(
+        currentPassword,
+        password,
+        confirmPassword
+      );
 
       setCurrentPassword('');
       setPassword('');
       setConfirmPassword('');
-    } catch (e) {
-    }
+    } catch (e) {}
   };
 
   return (
@@ -78,13 +86,11 @@ const UpdatePassword = (props: propsFromRedux) => {
           />
         </div>
         <div className="form__group right">
-          <button className="btn btn--small btn--green">
-            Save password
-          </button>
+          <button className="btn btn--small btn--green">Save password</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default connector(UpdatePassword)
+export default connector(UpdatePassword);

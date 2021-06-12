@@ -1,8 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AddBookingAction, BookingType, SetBookingsAction } from '../types/BookingTypes';
+import {
+  AddBookingAction,
+  BookingType,
+  SetBookingsAction,
+} from '../types/BookingTypes';
 
 const initialState: { bookings: BookingType[] } = {
-  bookings: []
+  bookings: [],
 };
 
 const bookingsSlice = createSlice({
@@ -14,8 +18,8 @@ const bookingsSlice = createSlice({
     },
     setBookings: (state, action: PayloadAction<SetBookingsAction>) => {
       state.bookings = action.payload.bookings;
-    }
-  }
+    },
+  },
 });
 
 export default bookingsSlice.reducer;

@@ -6,18 +6,16 @@ import errorReducer from '../reducers/alertReducer';
 import loadingReducer from '../reducers/loadingReducer';
 import { configureStore } from '@reduxjs/toolkit';
 
-const configStore = configureStore(
-  {
-    reducer: {
-      tours: tourReducer,
-      auth: authReducer,
-      bookings: bookingsReducer,
-      alert: errorReducer,
-      loading: loadingReducer
-    },
-    middleware: [thunk]
-  }
-);
+const configStore = configureStore({
+  reducer: {
+    tours: tourReducer,
+    auth: authReducer,
+    bookings: bookingsReducer,
+    alert: errorReducer,
+    loading: loadingReducer,
+  },
+  middleware: [thunk],
+});
 
 configStore.subscribe(() => {
   console.log(configStore.getState());
@@ -25,4 +23,4 @@ configStore.subscribe(() => {
 
 export default configStore;
 export type AppDispatch = typeof configStore.dispatch;
-export type AppProps = ReturnType<typeof configStore.getState>
+export type AppProps = ReturnType<typeof configStore.getState>;

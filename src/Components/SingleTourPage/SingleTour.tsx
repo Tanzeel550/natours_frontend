@@ -11,13 +11,15 @@ import { AppProps } from '../../store/configStore';
 
 const mapStateToProps = ({ tours, bookings }: AppProps) => ({
   bookings: bookings.bookings,
-  tours: tours.tours
+  tours: tours.tours,
 });
 const connector = connect(mapStateToProps);
-type propsFromRedux = ConnectedProps<typeof connector>
+type propsFromRedux = ConnectedProps<typeof connector>;
 
 const SingleTour = (props: propsFromRedux & RouteComponentProps) => {
-  const tour = props.tours.find(tour => tour.id === (props.match.params as { tourId: string }).tourId);
+  const tour = props.tours.find(
+    tour => tour.id === (props.match.params as { tourId: string }).tourId
+  );
 
   useEffect(() => {
     if (!tour) {
@@ -29,11 +31,11 @@ const SingleTour = (props: propsFromRedux & RouteComponentProps) => {
   return tour ? (
     <div>
       <HeaderSection {...tour} />
-      <DescriptionSection tour={tour}/>
-      <MapBoxSection locations={tour.locations} startDates={tour.startDates}/>
-      <PicturesSection images={tour.images}/>
-      <ReviewsSection reviews={tour.reviews}/>
-      {!isTourBooked && <CTASection tour={tour}/>}
+      <DescriptionSection tour={tour} />
+      <MapBoxSection locations={tour.locations} startDates={tour.startDates} />
+      <PicturesSection images={tour.images} />
+      <ReviewsSection reviews={tour.reviews} />
+      {!isTourBooked && <CTASection tour={tour} />}
     </div>
   ) : (
     <h1>There is no tour here, Please Go to home page and then try again!</h1>

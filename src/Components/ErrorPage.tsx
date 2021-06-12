@@ -15,4 +15,4 @@ const ErrorPage = () => (
   </main>
 );
 
-export default (ErrorPage);
+export default ErrorPage;

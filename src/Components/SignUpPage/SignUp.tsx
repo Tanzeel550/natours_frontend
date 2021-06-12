@@ -6,11 +6,14 @@ import validator from 'validator';
 import { startSendSignUpEmail, startSignUp } from '../../actions/authActions';
 import { AppProps } from '../../store/configStore';
 
-const mapStateToProps = ({ auth }: AppProps) => ({ isAuthenticated: auth.isAuthenticated });
-const connector = connect(mapStateToProps, {
-  startSignUp, startSendSignUpEmail
+const mapStateToProps = ({ auth }: AppProps) => ({
+  isAuthenticated: auth.isAuthenticated,
 });
-type propsFromRedux = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, {
+  startSignUp,
+  startSendSignUpEmail,
+});
+type propsFromRedux = ConnectedProps<typeof connector>;
 
 export const SignUp = (props: propsFromRedux & RouteComponentProps) => {
   const [name, setName] = useState('');
@@ -23,11 +26,9 @@ export const SignUp = (props: propsFromRedux & RouteComponentProps) => {
       try {
         await props.startSignUp(authToken);
 
-        await setTimeout(() => {
-        }, 2000);
+        await setTimeout(() => {}, 2000);
         props.history.push('/');
-      } catch (e) {
-      }
+      } catch (e) {}
     };
     const { authToken } = props.match.params as { authToken: string };
     if (authToken) signUp(authToken).then().catch();
@@ -39,17 +40,17 @@ export const SignUp = (props: propsFromRedux & RouteComponentProps) => {
       if (name === '') throw new Error('Name is required');
       if (email === '') throw new Error('Email is required');
       if (password === '') throw new Error('Password is required');
-      if (confirmPassword === '') throw new Error('ConfirmPassword is required');
-      if (password !== confirmPassword) throw new Error('Your passwords don\'t match');
+      if (confirmPassword === '')
+        throw new Error('ConfirmPassword is required');
+      if (password !== confirmPassword)
+        throw new Error("Your passwords don't match");
       if (!validator.isEmail(email)) throw new Error('Your Email is incorrect');
 
       await props.startSendSignUpEmail(name, email, password, confirmPassword);
 
       setEmail('');
       setPassword('');
-
-    } catch (e) {
-    }
+    } catch (e) {}
   };
 
   return (
@@ -116,9 +117,7 @@ export const SignUp = (props: propsFromRedux & RouteComponentProps) => {
           />
 
           <div className="form__group">
-            <button className="btn btn--green">
-              Sign Up
-            </button>
+            <button className="btn btn--green">Sign Up</button>
           </div>
         </form>
       </div>

@@ -1,17 +1,16 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ClearLoadingAction, SetLoadingAction } from '../types/LoadingTypes';
+import { createSlice } from '@reduxjs/toolkit';
 
 const loadingSlice = createSlice({
   name: 'loading',
   initialState: { isLoading: false },
   reducers: {
-    setLoading: (state, action: PayloadAction<SetLoadingAction>) => {
+    setLoading: state => {
       state.isLoading = true;
     },
-    clearLoading: (state, action: PayloadAction<ClearLoadingAction>) => {
+    clearLoading: state => {
       state.isLoading = false;
-    }
-  }
+    },
+  },
 });
 
 export default loadingSlice.reducer;

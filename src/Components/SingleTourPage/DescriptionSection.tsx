@@ -19,10 +19,18 @@ const GuideComponent = ({ guide }: { guide: UserType }) => (
   </div>
 );
 
-const OverViewBoxComponent = ({ icon, label, text }: { label: string, text: string, icon: any }) => (
+const OverViewBoxComponent = ({
+  icon,
+  label,
+  text,
+}: {
+  label: string;
+  text: string;
+  icon: any;
+}) => (
   <div className="overview-box__detail">
     <svg className="overview-box__icon">
-      <use xlinkHref={`${icons}#${icon}`}/>
+      <use xlinkHref={`${icons}#${icon}`} />
     </svg>
     <span className="overview-box__label">{label}</span>
     <span className="overview-box__text">{text}</span>
@@ -64,14 +72,20 @@ const OverViewBox = ({ tour }: { tour: TourType }) => (
       <div className="overview-box__group">
         <h2 className="heading-secondary ma-bt-lg">Your tour guides</h2>
         {tour.guides.map((guide, index) => (
-          <GuideComponent guide={guide} key={index}/>
+          <GuideComponent guide={guide} key={index} />
         ))}
       </div>
     </div>
   </div>
 );
 
-const DescriptionBox = ({ name, description }: { name: string, description: string }) => (
+const DescriptionBox = ({
+  name,
+  description,
+}: {
+  name: string;
+  description: string;
+}) => (
   <div className="description-box">
     <h2 className="heading-secondary ma-bt-lg">About {name} tour</h2>
     {description.split('\n').map((line, index) => (
@@ -82,10 +96,10 @@ const DescriptionBox = ({ name, description }: { name: string, description: stri
   </div>
 );
 
-const DescriptionSection = ({ tour }: {tour: TourType}) => (
+const DescriptionSection = ({ tour }: { tour: TourType }) => (
   <section className="section-description">
-    <OverViewBox tour={tour}/>
-    <DescriptionBox description={tour.description || ""} name={tour.name}/>
+    <OverViewBox tour={tour} />
+    <DescriptionBox description={tour.description || ''} name={tour.name} />
   </section>
 );
 

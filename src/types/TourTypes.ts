@@ -1,6 +1,8 @@
 import { UserType } from './AuthTypes';
+import { ReviewType } from './ReveiwTypes';
 
 export interface TourType {
+  id: string;
   name: string;
   duration: number;
   maxGroupSize: number;
@@ -14,7 +16,11 @@ export interface TourType {
   imageCover: string;
   images?: [string];
   startDates?: [Date];
-  startLocation: string;
+  startLocation: {
+    description: string;
+    type: ['Points'];
+    coordinates: [number];
+  };
   locations: [
     {
       type: 'Point';
@@ -23,9 +29,10 @@ export interface TourType {
       coordinates: [number];
     }
   ];
-  guides: UserType;
+  guides: [UserType];
+  reviews: [ReviewType];
 }
 
 export interface SetToursAction {
-  tours: TourType[]
+  tours: TourType[];
 }

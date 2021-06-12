@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { BOOKINGS_API_BASE_URL, NATOURS_REACT, REQUEST_TIMEOUT } from '../config';
 import { addBooking, setBookings } from '../reducers/bookingsReducer';
-import configStore from '../store/configStore';
 import { setErrorAlert } from '../reducers/alertReducer';
+import { AppDispatch } from '../store/configStore';
 
 const createInstance = () => {
   return axios.create({
@@ -14,7 +14,7 @@ const createInstance = () => {
   });
 };
 
-export const startReceiveSession = (tourId: string) => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const startReceiveSession = (tourId: string) => async (dispatch: AppDispatch): Promise<void> => {
   try {
     const { data } = await createInstance().post(`/tour/${tourId}/create-session`, {
       cancel_url: `${NATOURS_REACT + '/tour/' + tourId}`,
@@ -27,7 +27,7 @@ export const startReceiveSession = (tourId: string) => async (dispatch: typeof c
   }
 };
 
-export const startBookTour = (tourId: string) => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const startBookTour = (tourId: string) => async (dispatch: AppDispatch): Promise<void> => {
   try {
     const { data } = await createInstance().post(`/tour/${tourId}/booking`);
     dispatch(addBooking(data.data));
@@ -36,7 +36,7 @@ export const startBookTour = (tourId: string) => async (dispatch: typeof configS
   }
 };
 
-export const getMyBookings = () => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const getMyBookings = () => async (dispatch: AppDispatch): Promise<void> => {
   try {
     const { data } = await createInstance().get('/my-booked-tours');
     dispatch(setBookings(data.data));

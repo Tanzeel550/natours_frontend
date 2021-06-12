@@ -24,4 +24,5 @@ configStore.subscribe(() => {
 });
 
 export default configStore;
-export const storeDispatch = configStore.dispatch;
+export type AppDispatch = typeof configStore.dispatch;
+export type AppProps = ReturnType<typeof configStore.getState>

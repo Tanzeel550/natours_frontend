@@ -1,11 +1,11 @@
-import configStore from '../store/configStore';
+import { AppDispatch } from '../store/configStore';
 import { clearLoading, setLoading } from '../reducers/loadingReducer';
 
-export const simulateLoading = () => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const simulateLoading = () => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(setLoading({}));
 };
 
-export const exitLoading = () => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const exitLoading = () => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(clearLoading({}));
 };
 

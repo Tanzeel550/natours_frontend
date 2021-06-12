@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { NATOURS_REACT, REQUEST_TIMEOUT, USERS_API_BASE_URL } from '../config';
-import configStore from '../store/configStore';
+import { AppDispatch } from '../store/configStore';
 import { login, logout } from '../reducers/authReducer';
 import { setErrorAlert, setSuccessAlert } from '../reducers/alertReducer';
 
@@ -15,7 +15,7 @@ const createInstance = () => {
   });
 };
 
-export const startVerifyToken = () => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const startVerifyToken = () => async (dispatch: AppDispatch): Promise<void> => {
   try {
     if (!localStorage.getItem('token')) throw new Error();
     const { data } = await createInstance().post('/verifyToken');
@@ -28,7 +28,7 @@ export const startVerifyToken = () => async (dispatch: typeof configStore.dispat
   }
 };
 
-export const startSendLoginEmail = (email: string, password: string) => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const startSendLoginEmail = (email: string, password: string) => async (dispatch: AppDispatch): Promise<void> => {
   try {
     const { data } = await createInstance().post(`${USERS_API_BASE_URL}/sendLoginEmail`, {
       email,
@@ -41,7 +41,7 @@ export const startSendLoginEmail = (email: string, password: string) => async (d
   }
 };
 
-export const startLogin = (authToken: string) => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const startLogin = (authToken: string) => async (dispatch: AppDispatch): Promise<void> => {
   try {
     const { data } = await createInstance().get(`${USERS_API_BASE_URL}/login/${authToken}`);
     const { token, user } = data;
@@ -52,7 +52,7 @@ export const startLogin = (authToken: string) => async (dispatch: typeof configS
   }
 };
 
-export const startSignUp = (authToken: string) => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const startSignUp = (authToken: string) => async (dispatch: AppDispatch): Promise<void> => {
   try {
     const { data } = await createInstance().get(`${USERS_API_BASE_URL}/signup/${authToken}`);
     const { token, user } = data;
@@ -63,7 +63,7 @@ export const startSignUp = (authToken: string) => async (dispatch: typeof config
   }
 };
 
-export const startSendSignUpEmail = (name: string, email: string, password: string, confirmPassword: string) => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const startSendSignUpEmail = (name: string, email: string, password: string, confirmPassword: string) => async (dispatch: AppDispatch): Promise<void> => {
   try {
     const { data } = await createInstance().post(`${USERS_API_BASE_URL}/sendSignUpEmail`, {
       name,
@@ -78,7 +78,7 @@ export const startSendSignUpEmail = (name: string, email: string, password: stri
   }
 };
 
-export const startLogout = () => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const startLogout = () => async (dispatch: AppDispatch): Promise<void> => {
   try {
     await createInstance().get('/logout');
     dispatch(logout({}));
@@ -88,7 +88,7 @@ export const startLogout = () => async (dispatch: typeof configStore.dispatch): 
   }
 };
 
-export const startUpdateMe = (data: any) => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+export const startUpdateMe = (data: any) => async (dispatch: AppDispatch): Promise<void> => {
   try {
     const res = await createInstance().put('/updateMe', data);
     // TODO
@@ -100,7 +100,7 @@ export const startUpdateMe = (data: any) => async (dispatch: typeof configStore.
 
 export const startUpdatePassword = (currentPassword: string,
                                     password: string,
-                                    confirmPassword: string) => async (dispatch: typeof configStore.dispatch): Promise<void> => {
+                                    confirmPassword: string) => async (dispatch: AppDispatch): Promise<void> => {
   try {
     await createInstance().put('/updatePassword', {
       currentPassword,

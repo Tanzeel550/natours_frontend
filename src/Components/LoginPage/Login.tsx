@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import { startLogin, startSendLoginEmail } from '../../actions/authActions';
-import { exitLoading, simulateLoading } from '../../actions/loadingActions';
 import { AppProps } from '../../store/configStore';
-import { simulateErrorAlert, simulateSuccessAlert } from '../../actions/alertActions';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 const mapStateToProps = ({ auth }: AppProps) => ({ isAuthenticated: auth.isAuthenticated });
-
-const connector = connect(mapStateToProps, {
-  startLogin, simulateErrorAlert, simulateSuccessAlert, simulateLoading, exitLoading, startSendLoginEmail
-});
+const connector = connect(mapStateToProps, { startLogin, startSendLoginEmail });
 type propsFromRedux = ConnectedProps<typeof connector>
 
 export const Login = (props: propsFromRedux & RouteComponentProps) => {
@@ -20,17 +15,11 @@ export const Login = (props: propsFromRedux & RouteComponentProps) => {
   useEffect(() => {
     const login = async (authToken: string) => {
       try {
-        props.simulateLoading();
         await props.startLogin(authToken);
-        props.exitLoading();
-
-        props.simulateSuccessAlert('You have logged In successfully');
         await setTimeout(() => {
         }, 2000);
         props.history.push('/');
       } catch (e) {
-        props.exitLoading();
-        props.simulateErrorAlert(e.message);
       }
     };
     const { authToken } = props.match.params as { authToken: string };
@@ -42,13 +31,14 @@ export const Login = (props: propsFromRedux & RouteComponentProps) => {
     if (props.isAuthenticated && search.get('from')) props.history.push(search.get('from')!!);
   }, [props]);
 
-  const handleLoginSubmit = async (e:React.FormEvent<HTMLFormElement>):Promise<void> => {
+  const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
       await props.startSendLoginEmail(email, password);
       setEmail('');
       setPassword('');
-    } catch (e) {}
+    } catch (e) {
+    }
   };
 
   return (

@@ -20,7 +20,7 @@ const authSlice = createSlice({
       state.isAuthenticated = !!action.payload.user;
       state.isAdmin = action.payload.user.role === 'admin';
     },
-    logout: (state, action: PayloadAction<LogoutAction>) => {
+    logout: state => {
       state.user = null;
       state.isAuthenticated = false;
       state.isAdmin = false;

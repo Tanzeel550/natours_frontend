@@ -3,9 +3,7 @@ import { USER_IMAGES_BASE_URL } from '../../config';
 import { UserType } from '../../types/AuthTypes';
 import { TourType } from '../../types/TourTypes';
 
-// TODO
-// import icons from '../../utils/img/icons.svg';
-const icons = require('../../utils/img/icons.svg.svg') as string;
+import icons from '../../utils/img/icons.svg';
 
 const GuideComponent = ({ guide }: { guide: UserType }) => (
   <div className="overview-box__detail">

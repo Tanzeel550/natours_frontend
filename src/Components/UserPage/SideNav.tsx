@@ -16,7 +16,15 @@ const SideNavItem = (item: Item) => (
   </li>
 );
 
-const SideNav = ({ itemsList }: { itemsList: Item[] }) =>
-  itemsList.map((item, index) => <SideNavItem {...item} key={index} />);
+const SideNav = ({ itemsList }: { itemsList: Item[] }) => {
+  return (
+    <div>
+      {itemsList.map((item, index) => (
+        <SideNavItem {...item} key={index} />
+      ))}
+      ;
+    </div>
+  );
+};
 
 export default SideNav;

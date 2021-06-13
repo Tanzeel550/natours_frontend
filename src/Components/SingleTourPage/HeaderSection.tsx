@@ -2,9 +2,7 @@ import React from 'react';
 import { TOUR_IMAGES_BASE_URL } from '../../config';
 import { TourType } from '../../types/TourTypes';
 
-// TODO
-// import icons from '../../utils/img/icons.svg';
-const ICONS = require('../../utils/img/icons.svg') as string;
+import icons from '../../utils/img/icons.svg';
 
 const HeaderSection = ({ name, duration, locations, imageCover }: TourType) => (
   <section className="section-header">
@@ -23,13 +21,13 @@ const HeaderSection = ({ name, duration, locations, imageCover }: TourType) => (
       <div className="heading-box__group">
         <div className="heading-box__detail">
           <svg className="heading-box__icon">
-            <use xlinkHref={`${ICONS}#icon-clock`} />
+            <use xlinkHref={`${icons}#icon-clock`} />
           </svg>
           <span className="heading-box__text">{duration} days</span>
         </div>
         <div className="heading-box__detail">
           <svg className="heading-box__icon">
-            <use xlinkHref={`${ICONS}#icon-map-pin`} />
+            <use xlinkHref={`${icons}#icon-map-pin`} />
           </svg>
           <span className="heading-box__text">
             {locations && locations[0].description}

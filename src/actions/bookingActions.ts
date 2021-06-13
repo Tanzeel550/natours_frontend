@@ -4,7 +4,7 @@ import {
   NATOURS_REACT,
   REQUEST_TIMEOUT,
 } from '../config';
-import { addBooking, setBookings } from '../reducers/bookingsReducer';
+import { addBooking } from '../reducers/bookingsReducer';
 import { setErrorAlert, setSuccessAlert } from '../reducers/alertReducer';
 import { AppDispatch } from '../store/configStore';
 import { clearLoading, setLoading } from '../reducers/loadingReducer';
@@ -19,6 +19,13 @@ const createInstance = () => {
   });
 };
 
+export const getMyBookings = async (): Promise<any> => {
+  try {
+    const { data } = await createInstance().get('/my-booked-tours');
+    return data.data;
+  } catch (e) {}
+};
+
 export const startReceiveSession =
   (tourId: string) =>
   async (dispatch: AppDispatch): Promise<void> => {
@@ -26,14 +33,12 @@ export const startReceiveSession =
       const { data } = await createInstance().post(
         `/tour/${tourId}/create-session`,
         {
-          cancel_url: `${NATOURS_REACT + '/tour/' + tourId}`,
-          // success_url: `${NATOURS_REACT + '/createBooking/tour/' + id}`
-          success_url: `${NATOURS_REACT}/my-bookings?alert=BOOKING`,
+          frontend_url: NATOURS_REACT,
         }
       );
       return data.session;
     } catch (e) {
-      dispatch(setErrorAlert(e.response?.data?.message || e.message));
+      setErrorAlert({ message: e.response?.data?.message || e.message });
     }
   };
 
@@ -49,19 +54,6 @@ export const startBookTour =
         setSuccessAlert({ message: 'The Booking was created successfully' })
       );
     } catch (e) {
-      dispatch(setErrorAlert(e.response?.data?.message || e.message));
-    }
-  };
-
-export const getMyBookings =
-  () =>
-  async (dispatch: AppDispatch): Promise<void> => {
-    try {
-      dispatch(setLoading());
-      const { data } = await createInstance().get('/my-booked-tours');
-      dispatch(setBookings(data.data));
-      dispatch(clearLoading());
-    } catch (e) {
-      dispatch(setErrorAlert(e.response?.data?.message || e.message));
+      setErrorAlert({ message: e.response?.data?.message || e.message });
     }
   };

@@ -2,9 +2,7 @@ import React from 'react';
 import { USER_IMAGES_BASE_URL } from '../../config';
 import { ReviewType } from '../../types/ReveiwTypes';
 
-// TODO
-// import icons from '../../utils/img/icons.svg';
-const Icons = require('../../utils/img/icons.svg') as string;
+import icons from '../../utils/img/icons.svg';
 
 const ReviewsSection = ({ reviews }: { reviews: ReviewType[] }) => (
   <section className="section-reviews">
@@ -28,7 +26,7 @@ const ReviewsSection = ({ reviews }: { reviews: ReviewType[] }) => (
                 }`}
                 key={value}
               >
-                <use xlinkHref={`${Icons}#icon-star`} />
+                <use xlinkHref={`${icons}#icon-star`} />
               </svg>
             ))}
           </div>

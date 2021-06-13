@@ -48,8 +48,10 @@ export const SignUp = (props: propsFromRedux & RouteComponentProps) => {
 
       await props.startSendSignUpEmail(name, email, password, confirmPassword);
 
+      setName('');
       setEmail('');
       setPassword('');
+      setConfirmPassword('');
     } catch (e) {}
   };
 

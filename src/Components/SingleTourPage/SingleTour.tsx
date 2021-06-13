@@ -32,8 +32,8 @@ const SingleTour = (props: propsFromRedux & RouteComponentProps) => {
     <div>
       <HeaderSection {...tour} />
       <DescriptionSection tour={tour} />
-      <MapBoxSection locations={tour.locations} startDates={tour.startDates} />
-      <PicturesSection images={tour.images} />
+      <MapBoxSection tour={tour} />
+      <PicturesSection images={tour.images!!} />
       <ReviewsSection reviews={tour.reviews} />
       {!isTourBooked && <CTASection tour={tour} />}
     </div>

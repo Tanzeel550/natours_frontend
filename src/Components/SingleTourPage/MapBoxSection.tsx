@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
+import { TourType } from '../../types/TourTypes';
+import { MAPBOX_ACCESS_TOKEN } from '../../env';
 
-const MapBoxSection = props => {
+const MapBoxSection = ({ tour }: { tour: TourType }) => {
   useEffect(() => {
-    const { locations, startDates } = props;
-    mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN;
+    mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+    const { locations, startDates } = tour;
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/tanzeel550/ckiafgfnt08n219qq3rbbz5la',
@@ -31,7 +33,7 @@ const MapBoxSection = props => {
       })
         .setLngLat(location.coordinates)
         .setHTML(
-          `<p>Day ${new Date(startDates[0])}: ${location.description}</p>`
+          `<p>Day ${new Date(startDates?.[0]!!)} : ${location.description}</p>`
         )
         .addTo(map);
 

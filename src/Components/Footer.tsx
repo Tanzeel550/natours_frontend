@@ -1,13 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-// TODO
-const logoGreen = require('../utils/img/logo-green.png') as string;
+import * as logoGreen from '../utils/img/logo-green.png';
 
 const Footer = () => (
   <div className="footer">
     <div className="footer__logo">
-      <img src={logoGreen} alt="Natours logo" />
+      <img src={logoGreen.default} alt="Natours logo" />
     </div>
     <ul className="footer__nav">
       <li>

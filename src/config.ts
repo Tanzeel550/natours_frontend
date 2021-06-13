@@ -1,5 +1,6 @@
-const NATOURS_NODE = process.env.NATOURS_NODE;
-export const NATOURS_REACT = process.env.NATOURS_REACT;
+import { NATOURS_NODE, NATOURS_REACT_URL } from './env';
+
+export const NATOURS_REACT = NATOURS_REACT_URL;
 
 const NATOURS_API_BASE_URL = `${NATOURS_NODE}/api/v1`;
 

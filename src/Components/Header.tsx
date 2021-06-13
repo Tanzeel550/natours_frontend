@@ -4,8 +4,10 @@ import { connect, ConnectedProps } from 'react-redux';
 import { startLogout } from '../actions/authActions';
 import { USER_IMAGES_BASE_URL } from '../config';
 import { AppProps } from '../store/configStore';
+import icons from '../utils/img/icons.svg';
+import * as logo from '../utils/img/logo-white.png';
 
-const logoWhite = require('../utils/img/logo-white.png') as string;
+const logoWhite = logo.default;
 
 const mapStateToProps = ({ auth }: AppProps) => ({
   user: auth.user,
@@ -23,7 +25,7 @@ const Header = (props: propsFromRedux & RouteComponentProps) => {
 
     try {
       await props.startLogout();
-      await setTimeout(() => {}, 2000);
+      await setTimeout(() => {}, 20000);
       props.history.push('/');
       logoutButton.textContent = 'Logged Out';
     } catch (e) {
@@ -40,7 +42,8 @@ const Header = (props: propsFromRedux & RouteComponentProps) => {
         <form className="nav__search">
           <button className="nav__search-btn">
             <svg>
-              <use xlinkHref="img/icons.svg#icon-search" />
+              {/*<use xlinkHref="img/icons.svg#icon-search" />*/}
+              <use xlinkHref={`${icons}#icon-search`} />
             </svg>
           </button>
           <input

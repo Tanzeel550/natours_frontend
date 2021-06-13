@@ -19,14 +19,14 @@ export interface TourType {
   startLocation: {
     description: string;
     type: ['Points'];
-    coordinates: [number];
+    coordinates: [number, number];
   };
   locations: [
     {
       type: 'Point';
       description: string;
       address: string;
-      coordinates: [number];
+      coordinates: [number, number];
     }
   ];
   guides: [UserType];

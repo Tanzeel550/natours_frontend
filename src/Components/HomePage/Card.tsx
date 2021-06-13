@@ -2,10 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { TOUR_IMAGES_BASE_URL } from '../../config';
 import { TourType } from '../../types/TourTypes';
-
-// TODO
-// import icons from '../../utils/img/icons.svg';
-const icons = require('../../utils/img/icons.svg') as string;
+import icons from '../../utils/img/icons.svg';
 
 const CardData = ({ icon, data }: { icon: string; data: string }) => (
   <div className="card__data">
@@ -65,7 +62,7 @@ const Card = ({ tour }: { tour: TourType }) => (
         <span className="card__footer-text">per person</span>
       </p>
       <p className="card__ratings">
-        <span className="card__footer-value">{tour?.ratingsAverage}</span>
+        <span className="card__footer-value">{tour?.ratingsAverage} </span>
         <span className="card__footer-text">
           rating ({tour?.ratingsQuantity})
         </span>

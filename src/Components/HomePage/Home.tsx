@@ -18,7 +18,6 @@ const connector = connect(mapStateToProps);
 type propsFromRedux = ConnectedProps<typeof connector>;
 
 export const Home: React.FC<propsFromRedux> = ({ tours }: propsFromRedux) => {
-  console.log(tours.length);
   return tours.length > 0 ? (
     <main className="main">
       <div className="card-container">
@@ -28,7 +27,7 @@ export const Home: React.FC<propsFromRedux> = ({ tours }: propsFromRedux) => {
       </div>
     </main>
   ) : (
-    <h1>There are no tours here</h1>
+    <div className="error__msg">Sorry! No tours were found here</div>
   );
 };
 

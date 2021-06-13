@@ -8,9 +8,8 @@ import { simulateErrorAlert } from '../../actions/alertActions';
 import { AppProps } from '../../store/configStore';
 import { TourType } from '../../types/TourTypes';
 
-// TODO
-// import icons from '../../utils/img/icons.svg';
-const logoWhite = require('../../utils/img/logo-white.png') as string;
+import logoWhite from '../../utils/img/icons.svg';
+import { STRIPE_PUBLIC_KEY } from '../../env';
 
 const mapStateToProps = ({ auth }: AppProps) => ({
   isAuthenticated: auth.isAuthenticated,
@@ -24,7 +23,7 @@ const CTASection = (props: propsFromRedux & { tour: TourType }) => {
     const { id } = props.tour;
     try {
       const session = await startReceiveSession(id);
-      const stripe = await loadStripe(process.env.STRIPE_PUBLIC_KEY!!);
+      const stripe = await loadStripe(STRIPE_PUBLIC_KEY);
       await stripe?.redirectToCheckout({
         // @ts-ignore
         sessionId: session.id,

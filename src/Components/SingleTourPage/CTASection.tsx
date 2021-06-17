@@ -2,35 +2,26 @@ import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { NavLink } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
-import { startReceiveSession } from '../../actions/bookingActions';
+import { startBookTour } from '../../actions/bookingActions';
 import { TOUR_IMAGES_BASE_URL } from '../../config';
-import { simulateErrorAlert } from '../../actions/alertActions';
 import { AppProps } from '../../store/configStore';
 import { TourType } from '../../types/TourTypes';
 
-import logoWhite from '../../utils/img/icons.svg';
-import { STRIPE_PUBLIC_KEY } from '../../env';
+import logoWhite from '../../utils/img/logo-white.png';
 
 const mapStateToProps = ({ auth }: AppProps) => ({
   isAuthenticated: auth.isAuthenticated,
 });
-const connector = connect(mapStateToProps, { simulateErrorAlert });
+const connector = connect(mapStateToProps, { startBookTour });
 type propsFromRedux = ConnectedProps<typeof connector>;
 
 const CTASection = (props: propsFromRedux & { tour: TourType }) => {
   const handleBookings = async () => {
     document.querySelector('.btn__book-tour')!!.textContent = 'Loading...';
-    const { id } = props.tour;
     try {
-      const session = await startReceiveSession(id);
-      const stripe = await loadStripe(STRIPE_PUBLIC_KEY);
-      await stripe?.redirectToCheckout({
-        // @ts-ignore
-        sessionId: session.id,
-      });
+      await props.startBookTour(props.tour.id);
     } catch (e) {
       document.querySelector('.btn__book-tour')!!.textContent = 'Book Tour';
-      props.simulateErrorAlert(e.message);
     }
   };
 
@@ -41,11 +32,11 @@ const CTASection = (props: propsFromRedux & { tour: TourType }) => {
         <div className="cta__img cta__img--logo">
           <img src={logoWhite} alt="Natours logo" className="" />
         </div>
-        {images?.map((image, index) => (
+        {images?.slice(0, 2).map((image, index) => (
           <img
             src={TOUR_IMAGES_BASE_URL + image}
             alt={`${index + 1}`}
-            className={`cta__img cta__img--${index}`}
+            className={`cta__img cta__img--${index + 1}`}
             key={index}
           />
         ))}

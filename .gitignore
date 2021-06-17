@@ -25,3 +25,4 @@ yarn-error.log*
 src/env.ts
 frontend.iml
 .idea
+.firebaserc

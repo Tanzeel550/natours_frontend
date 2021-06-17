@@ -10,13 +10,11 @@ const connector = connect(mapStateToProps);
 type propsFromRedux = ConnectedProps<typeof connector>;
 
 const Booking: React.FC<propsFromRedux> = ({ bookings }: propsFromRedux) => {
-  console.log(bookings);
-
   return bookings?.length > 0 ? (
     <main className="main">
       <div className="card-container">
         {bookings.map((booking, index) => (
-          <Card key={index} tour={booking.tour} />
+          <Card key={index} tour={booking} />
         ))}
       </div>
     </main>

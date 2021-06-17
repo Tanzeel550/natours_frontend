@@ -29,16 +29,16 @@ ReactDOM.render(<Loading />, document.getElementById('root'));
 startGetTours()
   .then((data: TourType[]) => {
     configStore.dispatch(setTours({ tours: data }));
+    if (!localStorage.getItem('token'))
+      ReactDOM.render(jsx, document.getElementById('root'));
     return startVerifyToken();
   })
   .then(({ token, user }: LoginAction) => {
     if (token && user.id) configStore.dispatch(login({ token, user }));
-    console.log('User authenticated');
     return getMyBookings();
   })
   .then(data => {
-    // TODO: need to this out
-    if (data?.data) configStore.dispatch(setBookings({ bookings: data.data }));
+    if (data) configStore.dispatch(setBookings({ bookings: data }));
     ReactDOM.render(jsx, document.getElementById('root'));
   })
   .catch(e => {

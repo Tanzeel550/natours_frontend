@@ -32,7 +32,8 @@ export const SignUp = (props: propsFromRedux & RouteComponentProps) => {
     };
     const { authToken } = props.match.params as { authToken: string };
     if (authToken) signUp(authToken).then().catch();
-  }, [props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSignUpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

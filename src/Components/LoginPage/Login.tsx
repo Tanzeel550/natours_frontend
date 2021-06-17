@@ -23,14 +23,10 @@ export const Login = (props: propsFromRedux & RouteComponentProps) => {
       } catch (e) {}
     };
     const { authToken } = props.match.params as { authToken: string };
+    console.log(authToken);
     if (authToken) login(authToken).then().catch();
-  }, [props]);
-
-  useEffect(() => {
-    let search: URLSearchParams = new URLSearchParams(props.location.search);
-    if (props.isAuthenticated && search.get('from'))
-      props.history.push(search.get('from')!!);
-  }, [props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLoginSubmit = async (
     e: React.FormEvent<HTMLFormElement>

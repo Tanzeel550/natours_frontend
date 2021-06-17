@@ -2,12 +2,8 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import Card from './Card';
 import { AppProps } from '../../store/configStore';
-import { TourType } from '../../types/TourTypes';
 
-const mapStateToProps = ({
-  tours,
-  bookings,
-}: AppProps): { tours: TourType[] } => ({
+const mapStateToProps = ({ tours, bookings }: AppProps) => ({
   tours: tours.tours.filter(
     tour =>
       bookings.bookings.filter(booking => booking.id === tour.id).length === 0

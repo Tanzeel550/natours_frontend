@@ -4,10 +4,11 @@ import {
   NATOURS_REACT,
   REQUEST_TIMEOUT,
 } from '../config';
-import { addBooking } from '../reducers/bookingsReducer';
 import { setErrorAlert, setSuccessAlert } from '../reducers/alertReducer';
 import { AppDispatch } from '../store/configStore';
 import { clearLoading, setLoading } from '../reducers/loadingReducer';
+import { loadStripe } from '@stripe/stripe-js';
+import { STRIPE_PUBLIC_KEY } from '../env';
 
 const createInstance = () => {
   return axios.create({
@@ -26,29 +27,32 @@ export const getMyBookings = async (): Promise<any> => {
   } catch (e) {}
 };
 
-export const startReceiveSession =
-  (tourId: string) =>
-  async (dispatch: AppDispatch): Promise<void> => {
-    try {
-      const { data } = await createInstance().post(
-        `/tour/${tourId}/create-session`,
-        {
-          frontend_url: NATOURS_REACT,
-        }
-      );
-      return data.session;
-    } catch (e) {
-      setErrorAlert({ message: e.response?.data?.message || e.message });
-    }
-  };
+export const startReceiveSession = async (tourId: string): Promise<void> => {
+  try {
+    const { data } = await createInstance().post(
+      `/tour/${tourId}/create-session`,
+      {
+        frontend_url: NATOURS_REACT,
+      }
+    );
+    return data.session;
+  } catch (e) {
+    setErrorAlert({ message: e.response?.data?.message || e.message });
+  }
+};
 
 export const startBookTour =
   (tourId: string) =>
   async (dispatch: AppDispatch): Promise<void> => {
     try {
       dispatch(setLoading());
-      const { data } = await createInstance().post(`/tour/${tourId}/booking`);
-      dispatch(addBooking(data.data));
+      const session = await startReceiveSession(tourId);
+      console.log(session);
+      const stripe = await loadStripe(STRIPE_PUBLIC_KEY);
+      await stripe?.redirectToCheckout({
+        // @ts-ignore
+        sessionId: session.id,
+      });
       dispatch(clearLoading());
       dispatch(
         setSuccessAlert({ message: 'The Booking was created successfully' })
